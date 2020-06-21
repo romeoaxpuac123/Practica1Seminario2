@@ -4,7 +4,7 @@ from pyspark import SparkContext
 sc = SparkContext("local","Practica1")
 path1 = "C:\\Users\\Bayyron\\Desktop\\Junio2020\\Seminario2\\Laboratorio\\Archivos\\Libro2.csv"
 texto = sc.textFile(path1)
-Rdd = texto.map(lambda linea:linea.split(';'))\
+Rdd = texto.map(lambda linea:linea.split('|'))\
     .filter(lambda linea:(linea[0] != ""))\
     .filter(lambda linea:(linea[0] != "Region"))\
     .map(lambda linea:(linea[0],float(linea[11])))\
@@ -27,11 +27,11 @@ data =[GraficaPie]
 py.plot(data,filename="sales_1.html")
 
 
-Rdd = texto.map(lambda linea:linea.split(';'))\
+Rdd = texto.map(lambda linea:linea.split('|'))\
     .filter(lambda linea:(linea[1] != ""))\
-    .filter(lambda linea:(linea[1] != "Country" and linea[7] != ""))\
+    .filter(lambda linea:(linea[1] != "Country" and linea[5] != ""))\
     .filter(lambda linea:(linea[1].upper() == "GUATEMALA".upper()))\
-    .map(lambda linea:(linea[7].split("/")[2],int(linea[8])))\
+    .map(lambda linea:(linea[5].split("/")[2],int(linea[8])))\
     .reduceByKey(lambda x,y: x+y)\
     .sortBy(lambda linea: linea[1],ascending=False)
 
@@ -55,23 +55,23 @@ data = [GraficaBarras]
 py.plot(data,filename="sales_2.html")
 
 print("EJERCICIO3")
-Rdd_1 = texto.map(lambda linea:linea.split(';'))\
-    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[7] != ""))\
+Rdd_1 = texto.map(lambda linea:linea.split('|'))\
+    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[5] != ""))\
     .filter(lambda linea:(linea[3].upper() == "Online".upper()))\
-    .filter(lambda linea:(linea[7].split("/")[2] == "2010"))\
+    .filter(lambda linea:(linea[5].split("/")[2] == "2010"))\
     .map(lambda linea:("TOTAL_VENTAS-2010",float(linea[11])))\
     .reduceByKey(lambda x,y:x+y)
-Rdd_2 = texto.map(lambda linea:linea.split(';'))\
-    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[7] != "" and linea[12] != "" and linea[11] != "" ))\
+Rdd_2 = texto.map(lambda linea:linea.split('|'))\
+    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[5] != "" and linea[12] != "" and linea[11] != "" ))\
     .filter(lambda linea:(linea[3].upper() == "Online".upper()))\
-    .filter(lambda linea:(linea[7].split("/")[2] == "2010"))\
+    .filter(lambda linea:(linea[5].split("/")[2] == "2010"))\
     .map(lambda linea:("TOTAL_COSTOS-2010",float(linea[12])))\
     .reduceByKey(lambda x,y:x+y)
 
-Rdd_3 = texto.map(lambda linea:linea.split(';'))\
-    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[7] != "" and linea[12] != "" and linea[11] != "" ))\
+Rdd_3 = texto.map(lambda linea:linea.split('|'))\
+    .filter(lambda linea:(linea[3] != "" and linea[13] != "" and linea[5] != "" and linea[12] != "" and linea[11] != "" ))\
     .filter(lambda linea:(linea[3].upper() == "Online".upper()))\
-    .filter(lambda linea:(linea[7].split("/")[2] == "2010"))\
+    .filter(lambda linea:(linea[5].split("/")[2] == "2010"))\
     .map(lambda linea:("TOTAL_GANANCIAS-2010",float(linea[13])))\
     .reduceByKey(lambda x,y:x+y)
 

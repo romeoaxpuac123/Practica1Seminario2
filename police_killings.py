@@ -4,7 +4,7 @@ from pyspark import SparkContext
 sc = SparkContext("local","Practica1")
 path1 = "C:\\Users\\Bayyron\\Desktop\\Junio2020\\Seminario2\\Laboratorio\\Archivos\\Libro3.csv"
 texto = sc.textFile(path1)
-Rdd = texto.map(lambda linea:linea.split(';'))\
+Rdd = texto.map(lambda linea:linea.split('|'))\
     .filter(lambda linea:(linea[3] != ""))\
     .filter(lambda linea:(linea[3] != "Victim's race"))\
     .map(lambda linea:(linea[3].upper(),1)) \
@@ -29,7 +29,7 @@ GraficaBarras = go.Bar(
 
 data = [GraficaBarras]
 py.plot(data,filename="police_killings_1.html")
-Rdd = texto.map(lambda linea:linea.split(';'))\
+Rdd = texto.map(lambda linea:linea.split('|'))\
     .filter(lambda linea:(linea[5] != ""))\
     .filter(lambda linea:(linea[3] != "Victim's race"))\
     .filter(lambda linea:(len(linea[5]) == 10))\
